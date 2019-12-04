@@ -1,0 +1,7 @@
+#source_node	source_class	dest_node	dest_class	edge_class
+1	A	2	A	A-A
+1	A	3	T	A-T
+1	A	4	V	A-V
+2	A	3	T	A-T
+2	A	4	V	A-V
+5	A	4	V	A-V
