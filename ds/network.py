@@ -15,14 +15,13 @@ class HIN(object):
         which support multigraph, weighted edges
     '''
     def __init__(self):
-        self.graph = {} #{from_id: {to_id: {edge_class_id: weight}}}
-        #TODO correct the name
-        self.class_nodes = {} #{node_class: set([node_id])}
-        self.edge_class2id = {} #{edge_class: edge_class_id}
-        self.node2id = {} #{node: node_id}
-        self.k_hop_neighbors = {} #{k: {id_: set(to_ids)}}
-        self.edge_class_id_available_node_class = {} # {edge_class_id:
-                                                     #  (from_node_class, to_node_class)}
+        self.graph = {}  # {from_id: {to_id: {edge_class_id: weight}}}
+        # TODO correct the name
+        self.class_nodes = {}  # {node_class: set([node_id])}
+        self.edge_class2id = {}  # {edge_class: edge_class_id}
+        self.node2id = {}  # {node: node_id}
+        self.k_hop_neighbors = {}  # {k: {id_: set(to_ids)}}
+        self.edge_class_id_available_node_class = {}  # {edge_class_id: (from_node_class, to_node_class)}
 
     def __eq__(self, other):
         if not isinstance(other, HIN):
@@ -92,8 +91,8 @@ class HIN(object):
                 inverse_mapping[str(self.edge_class2id[edge_class])] = str(self.edge_class2id[inversed])
         return inverse_mapping
 
-    def add_edge(self, from_node, from_class, to_node, to_class,edge_class,
-                 weight = 1):
+    def add_edge(self, from_node, from_class, to_node, to_class, edge_class,
+                 weight=1):
         if edge_class not in self.edge_class2id:
             self.edge_class2id[edge_class] = len(self.edge_class2id)
         edge_id = self.edge_class2id[edge_class]
@@ -168,11 +167,14 @@ class HIN(object):
         return float(len(intersection))/len(union)
 
     def print_statistics(self):
+        # print node_class, this class node num
         for c, nodes in self.class_nodes.items():
             print c, len(nodes)
         class_count = {}
         for class_edges in self.graph.values():
+            print("###", class_edges)  # display1
             for class_, to_ids in class_edges.items():
+                print("##", class_, to_ids)  # display2  to_id,
                 if class_ not in class_count:
                     class_count[class_] = len(to_ids)
                     continue
@@ -260,13 +262,13 @@ class HIN(object):
                 return walk
             '''
             # Modified
-            #*******************
+            # *******************
             if node not in self.graph:
                 return walk
             if len(self.graph[node]) == 0:
                 return walk
-            #*******************
-            next_node, edge_class_id =random.choice(self.node_choices[node])
+            # *******************
+            next_node, edge_class_id = random.choice(self.node_choices[node])
             walk.append(edge_class_id)
             walk.append(next_node)
             node = next_node
@@ -274,7 +276,7 @@ class HIN(object):
         return walk
 
     def create_node_choices(self):
-        node_choices = {} #{from_id: [(to_id, edge_class_id)]} 
+        node_choices = {}  # {from_id: [(to_id, edge_class_id)]}
         for from_id in self.graph:
             node_choices[from_id] = []
             for to_id in self.graph[from_id]:
@@ -302,7 +304,7 @@ class HIN(object):
             self.create_node_choices()
 
         for c in range(count):
-#           print c
+            # print c
             n = 0
             for node in self.graph:
                 n += 1
@@ -312,7 +314,7 @@ class HIN(object):
                 if len(walk) != 1:
                     yield walk
 
-    #FIXME
+    # FIXME
     def random_select_edges_by_classes(self, from_class, to_class, edge_class, count):
         edge_class_id = self.edge_class2id[edge_class]
         positives = []

@@ -45,6 +45,6 @@ def load_a_HIN_from_edge_file(fname):
             line = line.strip()
             src, src_class, dst, dst_class, edge_class = line.split('\t')
             g.add_edge(src, src_class, dst, dst_class, edge_class)
-    g.print_statistics()
+    # g.print_statistics()
     return g
 

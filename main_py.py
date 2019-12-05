@@ -23,7 +23,6 @@ def main(graph_fname, node_vec_fname, path_vec_fname, options):
     node_vec_fname: the output file for nodes' vectors
     path_vec_fname: the output file for meta-paths' vectors
     '''
-
     print('Load a HIN...')
     g = loader.load_a_HIN(graph_fname)
 
